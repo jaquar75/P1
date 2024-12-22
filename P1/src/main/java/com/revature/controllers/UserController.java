@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -19,10 +21,17 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> insertUser(@RequestBody User user) {
+        return ResponseEntity.ok(userService.insertUser(user));
+    }
 
-        User newUser = userService.insertUser(user);
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
 
-        return ResponseEntity.ok(newUser);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<User> deleteUser(@PathVariable int userId) {
+        return ResponseEntity.ok(userService.deleteUser(userId));
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

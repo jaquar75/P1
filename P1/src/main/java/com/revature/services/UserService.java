@@ -5,6 +5,8 @@ import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -16,23 +18,30 @@ public class UserService {
     }
 
     public User insertUser(User user) {
-
         if (user.getUsername() == null || user.getUsername().isBlank()) {
-            throw new IllegalArgumentException("Username can't be null or blank");
+            throw new IllegalArgumentException("No fields should be null or blank");
         }
-
         if (user.getPassword() == null || user.getPassword().isBlank()) {
-            throw new IllegalArgumentException("Password can't be null or blank");
+            throw new IllegalArgumentException("No fields should be null or blank");
         }
-
         if (user.getFirstName() == null || user.getFirstName().isBlank()) {
-            throw new IllegalArgumentException("First name can't be null or blank");
+            throw new IllegalArgumentException("No fields should be null or blank");
         }
-
         if (user.getLastName() == null || user.getLastName().isBlank()) {
-            throw new IllegalArgumentException("Last name can't be null or blank");
+            throw new IllegalArgumentException("No fields should be null or blank");
         }
-
         return userDAO.save(user);
+    }
+
+    public List<User> getAllUsers() {
+        return userDAO.findAll();
+    }
+
+    public User deleteUser(int userId) {
+        User user = userDAO.findById(userId).orElseThrow(() -> {
+            throw new IllegalArgumentException("User with ID " + userId + " doesn't exist");
+        });
+        userDAO.deleteById(userId);
+        return user;
     }
 }
