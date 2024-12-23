@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import com.revature.aspects.AdminOnly;
+import com.revature.models.DTOs.OutgoingUserDTO;
 import com.revature.models.User;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +27,22 @@ public class UserController {
         return ResponseEntity.ok(userService.insertUser(user));
     }
 
+    @AdminOnly
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<OutgoingUserDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @AdminOnly
     @DeleteMapping("/{userId}")
     public ResponseEntity<User> deleteUser(@PathVariable int userId) {
         return ResponseEntity.ok(userService.deleteUser(userId));
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgument(IllegalArgumentException e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
+    @AdminOnly
+    @PatchMapping("/{userId}")
+    public ResponseEntity<User> promoteUser(@PathVariable int userId){
+        return ResponseEntity.ok(userService.promoteUser(userId));
     }
+
 }

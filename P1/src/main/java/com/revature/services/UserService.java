@@ -1,10 +1,12 @@
 package com.revature.services;
 
 import com.revature.DAOs.UserDAO;
+import com.revature.models.DTOs.OutgoingUserDTO;
 import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,8 +35,19 @@ public class UserService {
         return userDAO.save(user);
     }
 
-    public List<User> getAllUsers() {
-        return userDAO.findAll();
+    public List<OutgoingUserDTO> getAllUsers() {
+        List<OutgoingUserDTO> outgoingUsers = new ArrayList<>();
+        List<User> users = userDAO.findAll();
+        for(User user : users) {
+            outgoingUsers.add(new OutgoingUserDTO(
+                    user.getUserId(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getUsername(),
+                    user.getRole()
+            ));
+        }
+        return outgoingUsers;
     }
 
     public User deleteUser(int userId) {
@@ -43,5 +56,13 @@ public class UserService {
         });
         userDAO.deleteById(userId);
         return user;
+    }
+
+    public User promoteUser(int userId) {
+        User user = userDAO.findById(userId).orElseThrow(() -> {
+            throw new IllegalArgumentException("User with ID " + userId + " doesn't exist");
+        });
+        user.setRole("Manager");
+        return userDAO.save(user); // save allows us to save and return an object
     }
 }

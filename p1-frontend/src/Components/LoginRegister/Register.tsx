@@ -47,6 +47,7 @@ export const Register:React.FC = () => {
                     onChange={storeValues}
                 />
             </div>
+
             <div>
                 <Form.Control
                     type="text"
@@ -55,6 +56,7 @@ export const Register:React.FC = () => {
                     onChange={storeValues}
                 />
             </div>
+
             <div>
                 <Form.Control
                     type="text"
@@ -63,6 +65,7 @@ export const Register:React.FC = () => {
                     onChange={storeValues}
                 />
             </div>
+
             <div>
                 <Form.Control
                     type="password"
@@ -71,10 +74,12 @@ export const Register:React.FC = () => {
                     onChange={storeValues}
                 />
             </div>
+
             <div className="d-flex gap-1">
                 <Button onClick={() => navigate("/")}>Back</Button>
                 <Button onClick={register}>Register</Button>
             </div>
+            
         </Container>
     )
 }

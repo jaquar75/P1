@@ -16,6 +16,7 @@ export const Login:React.FC = () => {
                     name="username"
                 />
             </div>
+
             <div>
                 <Form.Control
                     type="password"
@@ -24,8 +25,11 @@ export const Login:React.FC = () => {
                 />
             </div>
 
-            <Button onClick={()=>navigate("/reimbursements")}>Login</Button>
-            <Button onClick={()=>navigate("/register")}>Register</Button>
+            <div className="d-flex gap-1">
+                <Button onClick={()=>navigate("/reimbursements")}>Login</Button>
+                <Button onClick={()=>navigate("/register")}>Register</Button>
+            </div>
+
         </Container>
     )
 }

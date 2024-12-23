@@ -8,6 +8,7 @@ interface Reimbursements {
     description:string,
     amount:number,
     status:string,
+    user:any
 }
 
 export const Reimbursements:React.FC = () => {
@@ -36,13 +37,14 @@ export const Reimbursements:React.FC = () => {
 
             <h3>Reimbursements</h3>
 
-            <Table>
-                <thead>
+            <Table className="table-warning table-hover">
+                <thead className="table-dark">
                     <tr>
                         <th>Reimbursement ID</th>
                         <th>Description</th>
                         <th>Amount</th>
                         <th>Status</th>
+                        <th>User</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -53,6 +55,7 @@ export const Reimbursements:React.FC = () => {
                             <td>{reimbursements.description}</td>
                             <td>{reimbursements.amount}</td>
                             <td>{reimbursements.status}</td>
+                            <td>{reimbursements.user.username}</td>
                             <td>
                                 <Button className="btn-danger" onClick={()=>{deleteTeam(reimbursements.reimbId)}}>Delete</Button>
                             </td>

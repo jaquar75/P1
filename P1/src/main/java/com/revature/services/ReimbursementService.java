@@ -27,7 +27,7 @@ public class ReimbursementService {
         Reimbursement reimbursement = new Reimbursement(0,
                 reimbursementDTO.getDescription(),
                 reimbursementDTO.getAmount(),
-                reimbursementDTO.getStatus(),
+                "PENDING",
                 null);
         Optional<User> user = userDAO.findById(reimbursementDTO.getUserId());
         if (user.isEmpty()) {
@@ -59,6 +59,14 @@ public class ReimbursementService {
             throw new IllegalArgumentException("No reimbursement found with ID " + reimbId);
         });
         reimbursement.setStatus(status);
+        return reimbursementDAO.save(reimbursement);
+    }
+
+    public Reimbursement updateReimbursementDescription(int reimbId, String description) {
+        Reimbursement reimbursement = reimbursementDAO.findById(reimbId).orElseThrow(() -> {
+            throw new IllegalArgumentException("No reimbursement found with ID " + reimbId);
+        });
+        reimbursement.setDescription(description);
         return reimbursementDAO.save(reimbursement);
     }
 }
