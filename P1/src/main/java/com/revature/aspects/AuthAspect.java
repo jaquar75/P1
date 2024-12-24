@@ -24,6 +24,7 @@ public class AuthAspect {
         }
     }
 
+    /*
     @Order(2)
     @Before("@annotation(AdminOnly)")
     public void checkAdmin(){
@@ -31,5 +32,5 @@ public class AuthAspect {
                 .getRequest().getSession().getAttribute("role"))){
             throw new IllegalArgumentException("User is not a manager");
         }
-    }
+    } */
 }

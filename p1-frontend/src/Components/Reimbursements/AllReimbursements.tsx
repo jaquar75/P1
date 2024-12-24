@@ -11,7 +11,7 @@ interface Reimbursements {
     user:any
 }
 
-export const Reimbursements:React.FC = () => {
+export const AllReimbursements:React.FC = () => {
 
     const [reimbursements, setReimbursements] = useState<Reimbursements[]>([])
 
@@ -22,8 +22,10 @@ export const Reimbursements:React.FC = () => {
     const navigate = useNavigate()
 
     const getAllReimbursements = async () => {
-        const reponse = await axios.get("http://localhost:4445/reimbursements")
-        setReimbursements(reponse.data)
+        const response = await axios.get("http://localhost:4445/reimbursements", {withCredentials:true})
+        .then((response)=>{
+            setReimbursements(response.data)
+        })
     }
 
     const deleteTeam = (reimbId:number) => {
@@ -33,9 +35,14 @@ export const Reimbursements:React.FC = () => {
     return(
         <Container>
 
-            <Button className="btn-info" onClick={()=>{navigate("/")}}>Back</Button>
+            <Button className="btn-info" onClick={()=>navigate(-1)}>Back</Button>
+            <Button className="btn-info" onClick={()=>{navigate("/users")}}>View All Users</Button>
+            <Button className="btn-info" onClick={()=>{navigate("/pendingManReimbursements")}}>View All Pending Reimbursements</Button>
+            <Button className="btn-info" onClick={()=>{navigate("/reimbursementForm")}}>Create Reimbursement</Button>
+            <Button className="btn-info" onClick={()=>{navigate("/pendingEmpReimbursements")}}>View Personal Pending Reimbursements</Button>
+            <Button className="btn-info" onClick={()=>{navigate("/deniedEmpReimbursements")}}>View Personal Denied Reimbursements</Button>
 
-            <h3>Reimbursements</h3>
+            <h3>All Reimbursements</h3>
 
             <Table className="table-warning table-hover">
                 <thead className="table-dark">
@@ -45,7 +52,6 @@ export const Reimbursements:React.FC = () => {
                         <th>Amount</th>
                         <th>Status</th>
                         <th>User</th>
-                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,9 +62,6 @@ export const Reimbursements:React.FC = () => {
                             <td>{reimbursements.amount}</td>
                             <td>{reimbursements.status}</td>
                             <td>{reimbursements.user.username}</td>
-                            <td>
-                                <Button className="btn-danger" onClick={()=>{deleteTeam(reimbursements.reimbId)}}>Delete</Button>
-                            </td>
                         </tr>
                     ))}
                 </tbody>
